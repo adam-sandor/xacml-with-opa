@@ -1,0 +1,14 @@
+{
+  "input": {
+    "Request": {
+      "Action": {
+        "Attribute": [
+          {
+            "AttributeId": "ServerAction",
+            "Value": "login"
+          }
+        ]
+      }
+    }
+  }
+}

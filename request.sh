@@ -1,0 +1,1 @@
+curl -X POST localhost:8181/v1/data/rules/Response -d @input.json

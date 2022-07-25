@@ -1,6 +1,5 @@
 package rules
-
-default permit = false
+import future.keywords.in
 
 current_time := time.now_ns()
 
@@ -11,12 +10,31 @@ permit {
   current_time <= time_today("17:00:00Z")
 }
 
+permit {
+  input.Request.Action.Attribute[a].AttributeId == "ServerAction"
+  input.Request.Action.Attribute[a].Value == "logout"
+}
+
+deny {
+  day := time.weekday(current_time)
+  day in {"Saturday", "Sunday"}
+  input.Request.Action.Attribute[a].Value != "logout"
+}
+
+default permit = false
+default deny = false
+
 Response["Decision"] = "Permit" {
   permit
+  not deny
 }
 
 Response["Decision"] = "Deny" {
   not permit
+}
+
+Response["Decision"] = "Deny" {
+  deny
 }
 
 Response["Status"] = status {
